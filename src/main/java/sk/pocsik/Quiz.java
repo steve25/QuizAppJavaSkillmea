@@ -8,6 +8,8 @@ public class Quiz {
     private final List<Question> usedQuestions = new ArrayList<>();
     private final int numberOfQuestions;
     private int score = 0;
+    Scanner scanner = new Scanner(System.in);
+
 
     public Quiz(int numberOfQuestions) {
         this.numberOfQuestions = numberOfQuestions > this.MAX_QUESTIONS ? 3 : numberOfQuestions;
@@ -49,18 +51,31 @@ public class Quiz {
             }
 
             if (questionCount >= MAX_QUESTIONS) {
+                System.out.println();
+                System.out.println("Your score is " + this.score + "/" + this.MAX_QUESTIONS);
+                System.out.println();
+
+                if (this.isContinue()) {
+                    questionCount = 1;
+                    this.score = 0;
+                    continue;
+                }
                 break;
             }
 
             questionCount++;
         }
 
-        System.out.println();
-        System.out.println("Your score is " + this.score + "/" + this.MAX_QUESTIONS);
+    }
+
+    private boolean isContinue() {
+        System.out.print("Do you wanna continue? (y/n): ");
+        String input = this.scanner.nextLine();
+
+        return input.equalsIgnoreCase("y");
     }
 
     private char[] getInput(Question question) {
-        Scanner scanner = new Scanner(System.in);
         char endChar = (char) (97 + question.getOptions().length - 1);
         String regex = "[a-" + endChar + "]";
         String errorMessage = "Please enter a valid option (a-" + endChar + "). ";
@@ -68,7 +83,7 @@ public class Quiz {
         char[] result;
 
         while (true) {
-            input = scanner.nextLine().trim().toLowerCase();
+            input = this.scanner.nextLine().trim().toLowerCase();
 
             if (input.isBlank()) {
                 System.out.print("Please enter a your option: ");
