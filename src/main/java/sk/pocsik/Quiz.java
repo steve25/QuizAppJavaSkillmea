@@ -17,16 +17,15 @@ public class Quiz {
     }
 
     private void createQuestions() {
-        this.questions.add(new Question("What is the capital of France?", new String[]{"Paris", "London", "Rome", "Berlin"}, new char[]{'a'}));
-        this.questions.add(new Question("Which planet is known as the Red Planet?", new String[]{"Mars", "Earth", "Jupiter", "Venus"}, new char[]{'a'}));
-        this.questions.add(new Question("Which of the following are programming languages?", new String[]{"Python", "HTML", "Java", "CSS"}, new char[]{'a', 'c'}));
-        this.questions.add(new Question("Who wrote 'Romeo and Juliet'?", new String[]{"William Shakespeare", "Charles Dickens", "Mark Twain", "Jane Austen"}, new char[]{'a'}));
-        this.questions.add(new Question("What is the chemical symbol for water?", new String[]{"H2O", "O2", "CO2", "H2"}, new char[]{'a'}));
-        this.questions.add(new Question("Which countries are in Europe?", new String[]{"France", "Brazil", "Japan", "Germany"}, new char[]{'a', 'd'}));
-        this.questions.add(new Question("What is the largest continent on Earth?", new String[]{"Asia", "Africa", "Europe", "Antarctica"}, new char[]{'a'}));
-        this.questions.add(new Question("Which elements are noble gases?", new String[]{"Hydrogen", "Helium", "Lithium", "Neon"}, new char[]{'b', 'd'}));
-        this.questions.add(new Question("Who is known as the father of modern physics?", new String[]{"Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"}, new char[]{'a'}));
-        this.questions.add(new Question("How many sides does a hexagon have?", new String[]{"6", "5", "8", "7"}, new char[]{'a'}));
+        this.questions.add(new Question("Which planet is known as the Red Planet?", new String[]{"Mars", "Earth", "Jupiter", "Venus"}, new ArrayList<>(){{add('a');}}));
+        this.questions.add(new Question("Which of the following are programming languages?", new String[]{"Python", "HTML", "Java", "CSS"}, new ArrayList<>(){{add('a'); add('c');}}));
+        this.questions.add(new Question("Who wrote 'Romeo and Juliet'?", new String[]{"William Shakespeare", "Charles Dickens", "Mark Twain", "Jane Austen"}, new ArrayList<>(){{add('a');}}));
+        this.questions.add(new Question("What is the chemical symbol for water?", new String[]{"H2O", "O2", "CO2", "H2"}, new ArrayList<>(){{add('a');}}));
+        this.questions.add(new Question("Which countries are in Europe?", new String[]{"France", "Brazil", "Japan", "Germany"}, new ArrayList<>(){{add('a'); add('d');}}));
+        this.questions.add(new Question("What is the largest continent on Earth?", new String[]{"Asia", "Africa", "Europe", "Antarctica"}, new ArrayList<>(){{add('a');}}));
+        this.questions.add(new Question("Which elements are noble gases?", new String[]{"Hydrogen", "Helium", "Lithium", "Neon"}, new ArrayList<>(){{add('b'); add('d');}}));
+        this.questions.add(new Question("Who is known as the father of modern physics?", new String[]{"Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"}, new ArrayList<>(){{add('a');}}));
+        this.questions.add(new Question("How many sides does a hexagon have?", new String[]{"6", "5", "8", "7"}, new ArrayList<>(){{add('a');}}));
     }
 
     public void startQuiz() {
@@ -76,7 +75,7 @@ public class Quiz {
     }
 
     private char[] getInput(Question question) {
-        char endChar = (char) (97 + question.getOptions().length - 1);
+        char endChar = (char) (97 + question.getAnswersLength() - 1);
         String regex = "[a-" + endChar + "]";
         String errorMessage = "Please enter a valid option (a-" + endChar + "). ";
         String input;
@@ -97,7 +96,7 @@ public class Quiz {
                 continue;
             }
 
-            if ((question.getQuestionType().equals(QuestionType.MULTIPLE) && result.length > question.getOptions().length)
+            if ((question.getQuestionType().equals(QuestionType.MULTIPLE) && result.length > question.getAnswersLength())
                     || (question.getQuestionType().equals(QuestionType.SINGLE) && result.length > 1)
             ) {
                 System.err.print("Too many characters. " + errorMessage);
