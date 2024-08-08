@@ -6,28 +6,27 @@ public class Question {
     private final String question;
     private final String[] options;
     private final char[] correctAnswers;
-    private final boolean isMulti;
+    private final QuestionType questionType;
 
     public Question(String question, String[] options, char[] correctAnswers) {
         this.question = question;
         this.options = options;
         this.correctAnswers = correctAnswers;
-        this.isMulti = correctAnswers.length > 1;
+        this.questionType = correctAnswers.length > 1 ? QuestionType.MULTIPLE : QuestionType.SINGLE;
     }
 
     public String[] getOptions() {
         return options;
     }
 
-    public boolean isMulti() {
-        return isMulti;
+    public QuestionType getQuestionType() {
+        return questionType;
     }
 
     public void printQuestion(int questionCount) {
-        String type = isMulti ? "multi" : "single";
 
         System.out.println();
-        System.out.println(questionCount + ". " + this.question + " (" + type + " answer)");
+        System.out.println(questionCount + ". " + this.question + " (" + questionType.getName() + " answer)");
 
         for (int i = 0; i < this.options.length; i++) {
             System.out.println("\t" +(char) (97 + i) + ". " + this.options[i]);

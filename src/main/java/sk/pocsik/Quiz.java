@@ -97,8 +97,8 @@ public class Quiz {
                 continue;
             }
 
-            if ((question.isMulti() && result.length > question.getOptions().length)
-                    || (!question.isMulti() && result.length > 1)
+            if ((question.getQuestionType().equals(QuestionType.MULTIPLE) && result.length > question.getOptions().length)
+                    || (question.getQuestionType().equals(QuestionType.SINGLE) && result.length > 1)
             ) {
                 System.err.print("Too many characters. " + errorMessage);
                 continue;
